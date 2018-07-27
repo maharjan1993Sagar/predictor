@@ -1,0 +1,10 @@
+{
+    "name": "dell55592/predictor",
+    "type":"project",
+    "autoload":{
+        "psr-4":{
+            "App\\":"src\\App"
+        }
+    },
+    "require": {}
+}
