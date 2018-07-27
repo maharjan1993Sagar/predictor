@@ -9,4 +9,9 @@ class match
     {
         $this->homeTeam=$homeTeam;
     }
+    function getHomeTeam()
+    {
+        return $this->homeTeam;
+
+    }
 }
