@@ -14,4 +14,8 @@ class match
         return $this->homeTeam;
 
     }
+function setAwayTeam($awayTeam)
+{
+$this->awayTeam=$awayTeam;
+}
 }
