@@ -1,3 +1,4 @@
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -10,7 +11,7 @@
     <title><?php echo $title;?></title>
     <!-- Place favicon.ico in the root directory -->
     <link rel="apple-touch-icon" href="../layout/images/apple-touch-icon.png">
-    <link rel="shortcut icon" type="image/ico" href="../layout/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/ico" href="../layout/images/football.ico" />
     <!-- Plugin-CSS -->
     <link rel="stylesheet" href="../layout/css/bootstrap.min.css">
     <link rel="stylesheet" href="../layout/css/owl.carousel.min.css">
@@ -65,7 +66,7 @@
                 <li><a href="matches.php">Matches</a></li>
                 <li><a href="leaderBoard.php">LeaderBoard</a></li>
 
-                <li><a href="Login.php">Login</a></li>
+                <li><a href="Logout.php">Logout</a></li>
 
 
             </ul>
