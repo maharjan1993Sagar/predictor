@@ -3,8 +3,6 @@
 
 namespace App;
 
-include('../connection.php');
-
 class user
 {
     public $id;
@@ -14,6 +12,16 @@ class user
     public $password;
     public $confirmPassword;
     public $permission;
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function setFirstName($firstName)
     {
@@ -45,16 +53,6 @@ class user
         return $this->email;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function setPassword($password)
     {
         $this->password = $password;
@@ -64,51 +62,115 @@ class user
     {
         return $this->password;
     }
+
     public function setConfirmPassword($confirmPassword)
     {
-        $this->confirmPassword= $confirmPassword;
+        $this->confirmPassword = $confirmPassword;
     }
 
     public function getConfirmPassword()
     {
         return $this->confirmPassword;
     }
+
     public function setPermission($permission)
     {
-        $this->permission= $permission;
+        $this->permission = $permission;
     }
 
     public function getPermission()
     {
         return $this->permission;
     }
-    public function register()
-    {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database="worldcup";
-        $conn = new mysqli($servername, $username, $password, $database);
 
+    function isValid()
+    {
+        $query = 'select * from users where email=' . $this->email;
+        $conn = mysqli_connect('127.0.0.1', 'root', '', 'worldcup');
+        if ($conn->query($conn)) {
+            return 'Email Already Exists in Record.';
+        } else if ($this->password != $this->confirmPassword) {
+            return 'Password and Confirm Password do not matched.';
+        } else {
+            return 'True';
+        }
+
+    }
+
+    function insertUser()
+    {
+        $conn = mysqli_connect('127.0.0.1', 'root', '', 'worldcup');
         if ($this->password != $this->confirmPassword) {
             $errMsg = "Password and Confirm Password not matched.";
-            // echo "Failed";
             header('Location: ../register.php');
         }
-        $select_query = 'select  id from users where email="' . $this->email . '"';
-        $row = mysqli_query($conn, $select_query);
+        $query = 'select  id from users where email="' . $this->email . '"';
+        $result = mysqli_query($conn, $query);
 
-        if (mysqli_num_rows($row)>0) {
+        if (mysqli_num_rows($result) > 0) {
             //$errMsg = "Record already contains this email.Use different email.";
             header('Location: ../register.php');
         } else {
-            $encodePassword =password_hash($this->password,PASSWORD_BCRYPT_DEFAULT_COST);
-            $query = 'insert into users (firstName, lastName, email,password,permission) VALUES( "' . $this->firstName . '","' . $this->lastName . '","' . $this->email . '", "' . $encodePassword . '","' . $this->permission . '" )';
+            $encodePassword = password_hash($this->password, PASSWORD_BCRYPT);
+            $query = 'insert into users (firstName, lastName, email,password,permission) VALUES( ' . $this->firstName . ',' . $this->lastName . ',' . $this->email . ',' . $encodePassword . ',' . $this->permission . ')';
             $result = mysqli_query($conn, $query);
-            $_SESSION["email"]=$this->email;
-
             header('Location: ../home.php');
         }
     }
+
+    function updateUser()
+    {
+
+
+    }
+
+    function deleteUser()
+    {
+
+
+    }
+
+    function changePassword()
+    {
+        $conn = mysqli_connect('127.0.0.1', 'root', '', 'worldcup');
+        $selectQuery = 'select * from users where id=' . $this->id;
+        $result = mysqli_query($conn, $selectQuery);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            $encodePassword = password_hash($this->password, PASSWORD_BCRYPT);
+            $updateQuery = 'update users set first_name=' . $row['first_name'] . ' ,last_name=' . $row['last_name'] . ' ,password=' . $encodePassword . ' ,permission=' . $row['permission'] . ' where id=' . $this->id;
+            return mysqli_query($conn, $updateQuery);
+        }
+
+    }
+
+    function loginUser()
+    {
+        $conn = mysqli_connect('127.0.0.1', 'root', '', 'worldcup');
+        $selectQuery = 'select * from users where email="' . $this->email . '"';
+        $result = mysqli_query($conn, $selectQuery);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            if (password_verify($this->password, $row['password'])) {
+                $_SESSION['email'] = $row['email'];
+                $_SESSION['id'] = $row['id'];
+                // return $result;
+                //header('Location: ../home.php');
+                return true;
+            } else {
+                //  header('Location: ../login.php');
+                return false;
+            }
+
+        }
+    }
+
+    function selectUser($query)
+    {
+        $conn = mysqli_connect('127.0.0.1', 'root', '', 'worldcup');
+        $result = mysqli_query($conn, $query);
+        return $result;
+    }
+
+
 }
-?>
