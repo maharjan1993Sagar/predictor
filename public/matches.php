@@ -15,9 +15,10 @@ if($_SESSION["id"]===null)
 }
 require_once '../vendor/autoload.php';
 $match = new App\match();
-$query = 'select * from matches';
 
-$result=$match->selectMatch($query);
+//$query = 'select * from matches';
+$rows=$match->getAll();
+//$result=$match->selectMatch($query);
 ?>
 <div class="container">
     <div class="row">
@@ -29,19 +30,18 @@ $result=$match->selectMatch($query);
                     <th>Time</th>
                     <th>Action</th></tr>
                 <?php
-                if($result)
-                {
-                    while($row=$result->fetch_assoc()) {
+
+                    foreach($rows  as $row) {
                         ?>
                         <tr>
-                            <td><?php echo $row["home_team"]?></td>
-                            <td><?php echo $row["away_team"]?></td>
-                            <td><?php echo $row["time"]?></td>
-                                <td><a  class="btn btn-primary"  href='prediction.php?predict_id=0&match_id=<?php echo $row["id"]?>'>Predict</a></td>
+                            <td><?php echo $row->getHomeTeam();?></td>
+                            <td><?php echo $row->getAwayTeam();?></td>
+                            <td><?php echo $row->getTime();?></td>
+                                <td><a  class="btn btn-primary"  href='prediction.php?predict_id=0&match_id=<?php echo $row->getId();?>'>Predict</a></td>
                         </tr>
                         <?php
                     }
-                }
+
                 ?>
             </table>
             <a href="adminPages/createMatch.php">Create Match</a>

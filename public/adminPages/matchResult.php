@@ -13,7 +13,11 @@ if($_SESSION["id"]===null)
         </script>";
 
 }
-include "../crud.php";
+//include "../crud.php";
+
+require_once '../vendor/autoLoad.php';
+
+
 $sql="SELECT * FROM matches";
 $result=selectData($sql);
 

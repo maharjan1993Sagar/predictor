@@ -48,13 +48,6 @@ else if($matchId==0)
                 </div>
                 <div class="col-md-6">
                     <h2>Make Prediction</h2>
-<!--                    --><?php //if($_SESSION['errorMsg']!=null)
-//                        {?>
-<!--                            <div class="alert alert-danger">-->
-<!--                             <label>--><?php //$_SESSION['errorMsg']?><!--</label>-->
-<!--                            </div>-->
-<!--                     --><?php //  }
-//                     ?>
                     <input type="hidden" name="match_id" value="<?php echo $matchId; ?>">
                     <input type="hidden" name="predict_id" value="<?php echo $predictId;?>">
                         <div class="col-md-12">

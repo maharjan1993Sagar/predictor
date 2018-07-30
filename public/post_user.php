@@ -63,7 +63,7 @@
 require_once '../vendor/autoload.php';
 $user = new App\user();
 
-$user->setFirstNuserame($_POST['first_name']);
+$user->setFirstName($_POST['first_name']);
 $user->setLastName($_POST['last_name']);
 $user->setEmail($_POST['email']);
 $user->setPassword($_POST['password']);

@@ -22,6 +22,13 @@ $result=selectData($sql);
         <div class="row">
             <div class="col-md-12">
                 <h2>Matches</h2>
+                <?php if($_SESSION['errorMsg']!=null)
+                {?>
+                    <div class="alert alert-danger">
+                        <label><?php echo $_SESSION['errorMsg'];?></label>
+                    </div>
+                <?php   }
+                                  ?>
                 <table class="table table-bordered table-striped table-responsive">
                     <tr><th>Home Team</th>
                         <th>Away Team</th>
@@ -33,7 +40,7 @@ $result=selectData($sql);
                             <td><?php echo $match["home_team"]?></td>
                             <td><?php echo $match["away_team"]?></td>
                             <td><?php echo $match["time"]?></td>
-                            <td><a  class="btn btn-primary"  href='prediction.php?predict_id=0&match_id=<?php echo $match["id"]?>'>Predict</a></td>
+                            <td><a  class="btn btn-primary"  href='matchResult.php?&match_id=<?php echo $match["id"]?>'>Predict</a></td>
                         </tr>
                         <?php
                     }
